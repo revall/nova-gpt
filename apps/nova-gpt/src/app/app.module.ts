@@ -3,10 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { ChatContainerComponent } from './components/chat-container/chat-container.component';
+import { ChatMessageComponent } from './components/chat-message/chat-message.component';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [
+    AppComponent,
+    ChatContainerComponent,
+    ChatContainerComponent,
+    ChatMessageComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
