@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { io } from 'socket.io-client';
 
 const SOCKET_ENDPOINT = 'http://localhost:3001'
@@ -8,6 +9,8 @@ const SOCKET_ENDPOINT = 'http://localhost:3001'
 export class SocketsService {
   socket!: any
   // Socket<DefaultEventsMap, >;
+  private messageSubject = new Subject<string>()
+  incomingMessage$ = this.messageSubject.asObservable()
 
   setupSocketConnection() {
     this.socket = io(SOCKET_ENDPOINT);
@@ -19,6 +22,7 @@ export class SocketsService {
     });
     this.socket.on('message', (data: string) => {
       console.log('message:', data);
+      this.messageSubject.next(data)
     });
   }
 

@@ -1,8 +1,6 @@
 <div class="container">
  <div class="chat-messages">
-    <nova-gpt-chat-message></nova-gpt-chat-message>
-    <nova-gpt-chat-message></nova-gpt-chat-message>
-    <nova-gpt-chat-message></nova-gpt-chat-message>
+    <nova-gpt-chat-message *ngFor="let message of messages">{{message}}</nova-gpt-chat-message>
  </div>
 
     <form (ngSubmit)="send()" class="chat-input">

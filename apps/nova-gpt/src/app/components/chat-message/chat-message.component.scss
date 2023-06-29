@@ -2,12 +2,13 @@ div.main {
     display: flex;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgb(217, 217, 227);
+    border-top: 1px solid rgb(217, 217, 227);
     font-family: ui-sans-serif, system-ui;
     font-size: 1rem;
     .icon {
         display: flex;
         align-content: center;
+        vertical-align: center;
         border-radius: 0.1rem;
         padding: 0.5rem;
         color: white;

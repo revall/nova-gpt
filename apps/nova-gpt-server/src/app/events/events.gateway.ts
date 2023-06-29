@@ -5,6 +5,7 @@ import {
     WebSocketServer,
     WsResponse,
   } from '@nestjs/websockets';
+  import { Logger } from '@nestjs/common';
   import { from, Observable } from 'rxjs';
   import { map } from 'rxjs/operators';
   import { Server } from 'socket.io';
@@ -17,20 +18,17 @@ import {
   export class EventsGateway {
     @WebSocketServer()
     server: Server;
-  
-    @SubscribeMessage('events')
-    findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
+    constructor(private logger: Logger) {}
+    // @SubscribeMessage('events')
+    // findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
 
-      return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
-    }
+    //   return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+    // }
 
     @SubscribeMessage('message')
     async process(@MessageBody() data: string): Promise<unknown> {
+      this.logger.log({ event: 'message', data }, 'Incoming message')
       return ({ event: 'message', data });
     }
   
-    @SubscribeMessage('identity')
-    async identity(@MessageBody() data: number): Promise<number> {
-      return data;
-    }
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { SocketsService } from '../../services/sockets.service';
 
@@ -7,10 +7,16 @@ import { SocketsService } from '../../services/sockets.service';
   templateUrl: './chat-container.component.html',
   styleUrls: ['./chat-container.component.scss'],
 })
-export class ChatContainerComponent {
+export class ChatContainerComponent implements OnInit {
   messageControl = new FormControl('');
+  messages: string[] = []
   constructor(private server: SocketsService) {
 
+  }
+
+  ngOnInit() {
+    this.server.incomingMessage$.
+    subscribe(message => this.messages.push(message))
   }
 
   send() {
