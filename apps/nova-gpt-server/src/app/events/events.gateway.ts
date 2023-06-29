@@ -9,6 +9,8 @@ import {
   import { from, Observable } from 'rxjs';
   import { map } from 'rxjs/operators';
   import { Server } from 'socket.io';
+import { ChatGptService } from '../services/chat-gpt/chat-gpt.service';
+import { NovaChatMessage } from '@nova-gpt/models'
   
   @WebSocketGateway({
     cors: {
@@ -18,7 +20,7 @@ import {
   export class EventsGateway {
     @WebSocketServer()
     server: Server;
-    constructor(private logger: Logger) {}
+    constructor(private logger: Logger,private gpt: ChatGptService) {}
     // @SubscribeMessage('events')
     // findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
 
@@ -28,7 +30,10 @@ import {
     @SubscribeMessage('message')
     async process(@MessageBody() data: string): Promise<unknown> {
       this.logger.log({ event: 'message', data }, 'Incoming message')
-      return ({ event: 'message', data });
+      const answer = await this.gpt.ask(data)
+      const response:NovaChatMessage = { event: 'message', data:answer, source: 'server'  }
+      this.logger.log(response, 'Response message')
+      return response;
     }
   
   }
