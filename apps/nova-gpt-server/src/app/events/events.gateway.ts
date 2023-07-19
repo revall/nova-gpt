@@ -10,7 +10,7 @@ import {
   import { map } from 'rxjs/operators';
   import { Server } from 'socket.io';
 import { ChatGptService } from '../services/chat-gpt/chat-gpt.service';
-import { NovaChatMessage } from '@nova-gpt/models'
+import { NovaChatMessage, novaMessage } from '@nova-gpt/models'
   
   @WebSocketGateway({
     cors: {
@@ -31,7 +31,7 @@ import { NovaChatMessage } from '@nova-gpt/models'
     async process(@MessageBody() data: string): Promise<unknown> {
       this.logger.log({ event: 'message', data }, 'Incoming message')
       const answer = await this.gpt.ask(data)
-      const response:NovaChatMessage = { event: 'message', data:answer, source: 'server'  }
+      const response:NovaChatMessage = novaMessage('server','message', answer)
       this.logger.log(response, 'Response message')
       return response;
     }

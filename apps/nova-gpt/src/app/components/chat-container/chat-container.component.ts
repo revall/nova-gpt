@@ -20,7 +20,9 @@ export class ChatContainerComponent implements OnInit {
   }
 
   send() {
-    this.server.send(this.messageControl.value || '');
+    const message = this.messageControl.value || ''
+    this.messages.push(message)
+    this.server.send(message);
     this.messageControl.reset();
   }
 

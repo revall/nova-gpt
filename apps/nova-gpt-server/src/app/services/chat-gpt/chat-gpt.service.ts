@@ -5,7 +5,6 @@ import { OpenAI } from "langchain/llms/openai";;
 dotenv.config();
 
 
-
 @Injectable()
 export class ChatGptService {
     private model = new OpenAI({
